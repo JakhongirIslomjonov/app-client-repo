@@ -15,7 +15,7 @@ services:
 
   postgres-db:
     image: postgres
-    container_name: postgres-db-new
+    container_name: postgres-db
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=0095
