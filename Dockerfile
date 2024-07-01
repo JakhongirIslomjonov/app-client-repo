@@ -11,4 +11,4 @@ COPY target/app.jar   app.jar
 EXPOSE 8080
 EXPOSE 5433
 # Run the application
-CMD ["jclava", "-jar","app.jar"]
+CMD ["java", "-jar","app.jar"]
