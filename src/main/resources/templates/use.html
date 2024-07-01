@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #6d5bba, #8d58bf, #de67a3, #f58a74);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            max-width: 800px;
+            padding: 20px;
+            border-radius: 15px;
+            background-color: white;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #6d5bba;
+            text-align: center;
+        }
+
+        .user-row {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+
+        .user-row:hover {
+            background-color: #e3f2fd;
+        }
+
+        .user-details {
+            flex-grow: 1;
+        }
+
+        .status-button {
+            padding: 8px 16px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+            border-radius: 5px;
+        }
+
+        .status-true {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .status-false {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .no-users {
+            text-align: center;
+            font-size: 18px;
+            color: #dc3545;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>User List</h1>
+    <div th:if="${users != null and !users.isEmpty()}">
+        <div th:each="user : ${users}" class="user-row">
+            <div class="user-details">
+                <h3 th:text="${user.name}"></h3>
+                <p th:text="${user.phoneNumber}"></p>
+            </div>
+            <button th:id="'status-button-' + ${user.id}"
+                    th:class="${user.checking} ? 'status-button status-true' : 'status-button status-false'"
+                    th:text="${user.checking} ? 'Call' : 'Cancel'"
+                    th:onclick="'updateStatus(' + ${user.id} + ');'">
+            </button>
+        </div>
+    </div>
+    <div th:if="${users == null or users.isEmpty()}" class="no-users">
+        Hali bu clientda userlar royhatdan otmadi.
+    </div>
+</div>
+
+<script>
+    function updateStatus(userId) {
+        // Find the button
+        var button = document.getElementById('status-button-' + userId);
+
+        // Toggle the button's state
+        if (button.classList.contains('status-true')) {
+            button.classList.remove('status-true');
+            button.classList.add('status-false');
+            button.textContent = 'Cancel';
+        } else {
+            button.classList.remove('status-false');
+            button.classList.add('status-true');
+            button.textContent = 'Call';
+        }
+    }
+</script>
+</body>
+</html>

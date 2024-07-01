@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Roles</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #6d5bba, #8d58bf, #de67a3, #f58a74);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            max-width: 800px;
+            padding: 20px;
+            border-radius: 15px;
+            background-color: white;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .header h1 {
+            margin-bottom: 20px;
+            color: #6d5bba;
+        }
+
+        .client-row {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            background-color: #f8f9fa;
+            transition: background-color 0.3s, box-shadow 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .client-row:hover {
+            background-color: #e9ecef;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .client-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #007bff;
+            margin-right: 20px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .client-name:hover {
+            text-decoration: underline;
+        }
+
+        .add-button {
+            background-color: #6d5bba;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .add-button:hover {
+            background-color: #563d7c;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .join-button {
+            background-color: #28a745;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .join-button:hover {
+            background-color: #218838;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .client-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .client-name {
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <a href="/api/client" class="add-button">Add Link</a>
+        <h1>Clientlar bilan ishlash paneli</h1>
+    </div>
+
+    <div id="clients" class="container">
+        <div class="client-row" th:each="client : ${clients}">
+            <a th:href="|/api/use?id=${client.id}|" th:text="${client.name}" class="client-name"></a>
+            <form th:action="@{/api/join}" method="get" class="d-flex align-items-center">
+                <input type="hidden" name="link" th:value="${client.link}">
+                <button type="submit" class="join-button">Join</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  spring-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: springboot-app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres-db
+    networks:
+      - backend-network
+
+  postgres-db:
+    image: postgres
+    container_name: postgres-db-new
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=0095
+      - POSTGRES_DB=postgres
+    ports:
+      - "5433:5432"
+    networks:
+      - backend-network
+
+networks:
+  backend-network:
+    driver: bridge
